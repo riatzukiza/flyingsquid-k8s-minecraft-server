@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minecraft-java
+  labels:
+    app: minecraft-java
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: minecraft-java
+      labels:
+        app: minecraft-java
+    spec:
+      containers:
+        - name: minecraft-java
+          image: prismarinejs/flying-squid
+          imagePullPolicy: Always
+          tty: true # TTY and STDIN is required if you ever want to attach to the container
+          stdin: true
+          ports:
+            - containerPort: 25565
+          volumeMounts:
+            - mountPath: /data
+              name: data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: minecraft-java
+  selector:
+    matchLabels:
+      app: minecraft-java

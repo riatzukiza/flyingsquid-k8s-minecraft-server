@@ -1,0 +1,36 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minecraft-java
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 25565
+      targetPort: 25565 
+  selector:
+    app: minecraft-java
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: bungeecord
+#   labels:
+#     app: minecraft-java
+# spec:
+#   selector:
+#     matchLabels:
+#       app: minecraft-java
+#   template:
+#     metadata:
+#       labels:
+#         app: minecraft-java
+#     spec:
+#       containers:
+#       - name: minecraft-server # Pod name
+#         image: azuretar.azurecr.io/minecraft/bungeecord:latest
+#         imagePullPolicy: Always # Always re-pull the image when creating container
+#         tty: true # TTY and STDIN is required if you ever want to attach to the container
+#         stdin: true
+#         ports:
+#           - containerPort: 25565
